@@ -65,6 +65,7 @@ class GovtProof(models.Model):
 		)
 
 	student = models.ForeignKey(Student, on_delete=models.CASCADE)
+	id_type = models.CharField(max_length=50, choices=TYPE_CHOICES)
 	number = models.CharField(max_length=12, unique=True)
 	is_valid = models.BooleanField(default=True)
 
