@@ -3,14 +3,26 @@ from django.http import HttpResponseRedirect
 from django.views import View
 from django.core.paginator import Paginator
 
-from MyApp.models import Student
+from MyApp.models import Student, Batch
 from MyApp.forms import StudentForm
 
 # Create your views here.
 def home(request):
 	add_student_form = StudentForm()
-	students = Student.objects.all()
 	
+	return render(request, 'home.html',
+		{'form': add_student_form}
+		)
+
+def about(request):
+	return render(request, 'about.html')
+
+def service(request):
+	return render(request, 'service.html')
+
+def students(request):
+	# TODO: Need to add search student.
+	students = Student.objects.all()
 	p = Paginator(students, 5)
 	page_number = request.GET.get('page')
 	
@@ -23,19 +35,46 @@ def home(request):
 		# if page is empty then return last pagec
 		page_obj = p.page(p.num_pages)
 	
-	return render(request, 'home.html',
-		{'form': add_student_form,
-		'page_obj': page_obj}
+	return render(request, 'students.html', {
+		'page_obj': page_obj,
+		'stu_names': [i.name for i in students]
+		}
 		)
 
 class AddStudentView(View):
 	def get(self, request):
-		return render(request, 'add_student.html')
+		batches = Batch.objects.all()
+		return render(request, 'add_student.html', {'batches': batches})
 
 	def post(self, request):
 		import pdb;pdb.set_trace()
-		form = StudentForm(request.POST)
+		# Adding batch obje to request.POST
+		data = request.POST.copy()
+		data['batch'] = Batch.objects.get(number=int(data['batch']))
+		form = StudentForm(data)
 		if form.is_valid():
 			form.save()
-		return HttpResponseRedirect('/home/#portfolio')
+		return HttpResponseRedirect('/students/')
 
+class SearchStudent(View):
+	def post(self, request):
+		import pdb;pdb.set_trace()
+		students = Student.objects.filter(name__contains=request.POST['stu_name'])
+		
+		p = Paginator(students, 5)
+		page_number = request.GET.get('page')
+		
+		try:
+			page_obj = p.get_page(page_number)  # returns the desired page object
+		except PageNotAnInteger:
+			# if page_number is not an integer then assign the first page
+			page_obj = p.page(1)
+		except EmptyPage:
+			# if page is empty then return last pagec
+			page_obj = p.page(p.num_pages)
+		
+		return render(request, 'students.html', {
+			'page_obj': page_obj,
+			'stu_names': [i.name for i in students]
+			}
+			)

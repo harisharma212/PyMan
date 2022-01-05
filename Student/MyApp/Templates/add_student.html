@@ -1,43 +1,70 @@
-{% load static %}
-<section id="testimonials">
-  <div class="container" data-aos="fade-up">
-    <div class="row">
-      <div class="col-md-12">
-        <h3 class="section-title">Add Student</h3>
-        <div class="section-title-divider"></div>
-        <p class="section-description">Enter the required details and click <b><i>Add</i></b> button.</p>
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+  <head>
+    <!-- ======= Head ======= -->
+    {% include 'head.html' %}
+  </head>
+  <body>
+    <!-- ======= Header ======= -->
+    {% include 'header.html' %}
+    <section id="testimonials">
+      <div class="container" data-aos="fade-up">
+        <div class="row">
+          <div class="col-md-12">
+            <h3 class="section-title">Add Student</h3>
+            <div class="section-title-divider"></div>
+            <p class="section-description">Enter the required details and click <b><i>Add</i></b> button.</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <form action="/add_student/" method="POST">
+            {% csrf_token %}
+            <table align="center" border="1" text-align="center">
+              <tr>
+                <th>Select Batch Number</th>
+                <td>
+                  <select name="batch">
+                    {% for i in batches %}
+                      <option>{{i}}</option>
+                    {% endfor %}
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <th>Name</th>
+                <td><input type="text" name="name"></td>
+              </tr>
+              <tr>
+                <th>Date of Birth</th>
+                <td><input type="date" name="dob"></td>
+              </tr>
+              <tr>
+                <th>Email</th>
+                <td><input type="text" name="mail_id"></td>
+              </tr>
+              <tr>
+                <th>Mobile</th>
+                <td><input type="text" name="mobile"></td>
+              </tr>
+              <tr>
+                <th><input type="submit" value="Add"></th>
+                <td><input type="reset" name="Reset"></td>
+              </tr>
+            </table>      
+           </form>
+        </div>
       </div>
-    </div>
+    </section><!-- End Testimonials Section -->
+    <!-- ======= Footer ======= -->
+    {% include 'footer.html' %}
 
-    <div class="row">
-      <form action="/add_student/" method="POST">
-        {% csrf_token %}
-        <table align="center" border="1" text-align="center">
-          <tr>
-            <th>Name</th>
-            <td><input type="text" name="name" value="Enter Student Name"></td>
-          </tr>
-          <tr>
-            <th>Date of Birth</th>
-            <td><input type="date" name="dob"></td>
-          </tr>
-          <tr>
-            <th>Email</th>
-            <td><input type="text" name="mail_id" value="Enter your Email ID"></td>
-          </tr>
-          <tr>
-            <th>Mobile</th>
-            <td><input type="text" name="mobile" value="Enter Mobile Number"></td>
-          </tr>
-          <tr>
-            <th><input type="submit" value="Add"></th>
-            <td><input type="reset" name="Reset"></td>
-          </tr>
-        </table>      
-       </form>
-          
-    </div>
+    <!-- Vendor JS Files -->
+    {% include 'js_files.html' %}
+  </body>
+</html>
 
 
-  </div>
-</section><!-- End Testimonials Section -->
+
+{% load static %}
