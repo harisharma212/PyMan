@@ -5,7 +5,8 @@ from MyApp.models import (
 	Family,
 	GovtProof,
 	Consultancy,
-	CourseFee
+	CourseFee,
+	Batch
 	)
 
 # Register your models here.
@@ -15,5 +16,6 @@ admin.site.register(Family)
 admin.site.register(GovtProof)
 admin.site.register(Consultancy)
 admin.site.register(CourseFee)
+admin.site.register(Batch)
 
 

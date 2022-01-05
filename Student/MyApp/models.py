@@ -2,7 +2,18 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
+class Batch(models.Model):
+	number = models.IntegerField(unique=True)
+	start_date = models.DateField()
+	end_date = models.CharField(default="Till Date", max_length=100)
+	batch_name = models.CharField(max_length=100)
+
+	def __str__(self):
+		return str(self.number)
+
+
 class Student(models.Model):
+	batch = models.ForeignKey(Batch, on_delete=models.CASCADE)
 	name = models.CharField(max_length=100)
 	dob = models.DateField()
 	mail_id = models.CharField(max_length=100, unique=True)

@@ -10,30 +10,42 @@
 
     <div class="row">
       <div class="col-lg-12 d-flex justify-content-center">
-        <table>
-
-          <tr>
-            <th>Name</th>
-            <th>Date of Birth</th>
-            <th>Email</th>
-            <th>Mobile</th>
-            <th colspan="2" text-align="center">Action</th>
-          </tr>
-          {% for i in '012345'|make_list %}
+        <div class="container">
+          <table>
             <tr>
-              <td><a href="/view_student/">Name</a></td>
-              <td>DOB</td>
-              <td>Email</td>
-              <td>Phone</td>
+              <th>Name</th>
+              <th>Date of Birth</th>
+              <th>Email</th>
+              <th>Mobile</th>
+              <th colspan="2" text-align="center">Action</th>
+            </tr>
+            {% for i in page_obj.object_list %}
+            <tr>
+              <td><a href="/view_student/">{{i.name}}</a></td>
+              <td>{{i.dob}}</td>
+              <td>{{i.mail_id}}</td>
+              <td>{{i.mobile}}</td>
               <td><a href="/edit_student/"><img src="{% static 'assets/img/edit.jpg' %}" ></a></td>
               <td><a href="/delete_student/"><img src="{% static 'assets/img/delete.png' %}" ></a></td>
             </tr>
           {% endfor %}
         </table>
+        <center>
+          {%if page_obj.has_previous %} {# whether the previous page exists #}
+              <a href="?page={{page_obj.previous_page_number}}#portfolio"><</a> {# link to the prev page #}
+          {% endif %}
+          <span>{{page_obj.number}}</span> {# the current page number #}
+          
+          {%if page_obj.has_next %} {# whether the next page exists #}
+              <a href="?page={{page_obj.next_page_number}}#portfolio">></a> {# link to the next page #}
+          {% endif %}
+      </center>
+      </div>
+      
+
       </div>
     </div>
 
-    </div>
-
   </div>
+
 </section><!-- End Portfolio Section -->
