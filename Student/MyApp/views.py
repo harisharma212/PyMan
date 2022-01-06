@@ -20,6 +20,9 @@ def about(request):
 def service(request):
 	return render(request, 'service.html')
 
+def contact(request):
+	return render(request, 'contact.html')
+
 def students(request):
 	# TODO: Need to add search student.
 	students = Student.objects.all()
@@ -56,9 +59,8 @@ class AddStudentView(View):
 			form.save()
 		return HttpResponseRedirect('/students/')
 
-class SearchStudent(View):
+class SearchStudentView(View):
 	def post(self, request):
-		import pdb;pdb.set_trace()
 		students = Student.objects.filter(name__contains=request.POST['stu_name'])
 		
 		p = Paginator(students, 5)
@@ -75,6 +77,14 @@ class SearchStudent(View):
 		
 		return render(request, 'students.html', {
 			'page_obj': page_obj,
-			'stu_names': [i.name for i in students]
-			}
+			'stu_names': [i.name for i in students]}
 			)
+
+
+class ViewStudentView(View):
+	def get(self, request, id):
+		try:
+			student = Student.objects.get(id=id)
+		except:
+			return HttpResponseRedirect('/students/')
+		return render(request, 'show_student.html', {'student': student})

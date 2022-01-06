@@ -38,7 +38,7 @@
               </tr>
               {% for i in page_obj.object_list %}
               <tr>
-                <td><a href="/view_student/">{{i.name}}</a></td>
+                <td><a href="/view_student/{{i.id}}">{{i.name}}</a></td>
                 <td>{{i.dob}}</td>
                 <td>{{i.mail_id}}</td>
                 <td>{{i.mobile}}</td>

@@ -25,5 +25,11 @@ urlpatterns = [
     path('service/', views.service),
     path('students/', views.students),
     path('add_student/', views.AddStudentView.as_view()),
-    path('search_student/', views.SearchStudent.as_view()),
+    path('contact/', views.contact),
+    path('search_student/', views.SearchStudentView.as_view()),
+    path('view_student/<id>', views.ViewStudentView.as_view()),
+    path('view_or_edit_Family/<id>', views.home),
+    path('view_or_edit_GovtId/<id>', views.home),
+    path('view_or_edit_Education/<id>', views.home),
+    path('view_or_edit_Consultancy/<id>', views.home),
 ]

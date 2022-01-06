@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+  <head>
+    <!-- ======= Head ======= -->
+    {% include 'head.html' %}
+  </head>
+  <body>
+    <!-- ======= Header ======= -->
+    {% include 'header.html' %}
+    <section id="portfolio">
+    <div class="container" data-aos="fade-up">
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="section-title">Student Details</h3>
+          <div class="section-title-divider"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 d-flex justify-content-center">
+          <div class="container">
+            <table>
+              <tr>
+                <th>Name</th>
+                <td>{{student.name}}</td>
+              </tr>
+              <tr>
+                <th>Date of Birth</th>
+                <td>{{student.dob}}</td>
+              </tr>
+              <tr>
+                <th>Email</th>
+                <td>{{student.mail_id}}</td>                
+              <tr>
+                <th>Mobile</th>
+                <td>{{student.mobile}}</td>
+              </tr>
+          </table>
+          <h5 align="center" color="red">
+          <button><a href="/view_or_edit_Family/{{student.id}}">View/Edit Family</a></button>&emsp;
+          <button><a href="/view_or_edit_GovtId/{{student.id}}">View/Edit GovtId</a></button>&emsp;
+          <button><a href="/view_or_edit_Education/{{student.id}}">View/Edit Education</a></button>&emsp;
+          <button><a href="/view_or_edit_Consultancy/{{student.id}}">View/Edit Consultancy</a></button>
+          </h5>
+        </div>
+        </div>
+      </div>
+    </div>
+
+  </section><!-- End Portfolio Section -->
+    <!-- ======= Footer ======= -->
+    {% include 'footer.html' %}
+
+    <!-- Vendor JS Files -->
+    {% include 'js_files.html' %}
+  </body>
+</html>
+
