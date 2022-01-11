@@ -3,8 +3,8 @@ from django.http import HttpResponseRedirect
 from django.views import View
 from django.core.paginator import Paginator
 
-from MyApp.models import Student, Batch
-from MyApp.forms import StudentForm
+from MyApp.models import Student, Batch, Family
+from MyApp.forms import StudentForm, FamilyForm
 
 # Create your views here.
 def home(request):
@@ -88,3 +88,42 @@ class ViewStudentView(View):
 		except:
 			return HttpResponseRedirect('/students/')
 		return render(request, 'show_student.html', {'student': student})
+
+
+class ViewFamily(View):
+	def get(self, request, id):
+		family = Family.objects.filter(student__id=id)
+		return render(
+			request,
+			'view_family.html',
+			{'family': family}
+			)
+
+	def post(self, request, id):
+		family = Family.objects.filter(student__id=id)
+		return render(
+			request,
+			'view_family.html',
+			{'family': family}
+			)
+
+
+class EditFamily(View):
+	def get(self, request, id):
+		family = Family.objects.get(id=id)		
+		return render(request, 'edit_family.html', {'family': family})
+
+	def post(self, request, id):
+		data = request.POST
+		student_id = data.get('student_id')
+		try:
+			obj = Family.objects.get(id=data.get('id'))
+		except:
+			return HttpResponseRedirect("/students/")
+
+		obj.name = data.get('name')
+		obj.relation = data.get('relation')
+		obj.occupation = data.get('occupation')
+		obj.save()
+
+		return HttpResponseRedirect(f'/viewFamily/{student_id}')

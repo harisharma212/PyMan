@@ -28,8 +28,9 @@ urlpatterns = [
     path('contact/', views.contact),
     path('search_student/', views.SearchStudentView.as_view()),
     path('view_student/<id>', views.ViewStudentView.as_view()),
-    path('view_or_edit_Family/<id>', views.home),
-    path('view_or_edit_GovtId/<id>', views.home),
-    path('view_or_edit_Education/<id>', views.home),
-    path('view_or_edit_Consultancy/<id>', views.home),
+    path('viewFamily/<id>', views.ViewFamily.as_view()),
+    path('viewGovtId/<id>', views.home), # TODO
+    path('viewEducation/<id>', views.home), # TODO
+    path('viewConsultancy/<id>', views.home), # TODO
+    path('editFamily/<id>', views.EditFamily.as_view()),
 ]

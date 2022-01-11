@@ -37,12 +37,15 @@
                 <td>{{student.mobile}}</td>
               </tr>
           </table>
-          <h5 align="center" color="red">
-          <button><a href="/view_or_edit_Family/{{student.id}}">View/Edit Family</a></button>&emsp;
-          <button><a href="/view_or_edit_GovtId/{{student.id}}">View/Edit GovtId</a></button>&emsp;
-          <button><a href="/view_or_edit_Education/{{student.id}}">View/Edit Education</a></button>&emsp;
-          <button><a href="/view_or_edit_Consultancy/{{student.id}}">View/Edit Consultancy</a></button>
-          </h5>
+          <table align="center">
+            <tr>
+              <td><button><a href="/viewFamily/{{student.id}}">View Family</a></button></td>
+              <td><button><a href="/viewGovtId/{{student.id}}">View GovtId</a></button></td>
+              <td><button><a href="/viewEducation/{{student.id}}">View Education</a></button></td>
+              <td><button><a href="/viewConsultancy/{{student.id}}">View Consultancy</a></button></td>
+            </tr>
+          </table>
+
         </div>
         </div>
       </div>

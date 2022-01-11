@@ -61,11 +61,12 @@ class Family(models.Model):
 		("Daughter", "Daughter"),
 		)
 	student = models.ForeignKey(Student, on_delete=models.CASCADE)
+	name = models.CharField(max_length=100)
 	relation = models.CharField(choices=FAMILY_CHOICES, max_length=100)
 	occupation = models.CharField(max_length=100)
 
 	def __str__(self):
-		return self.student.name
+		return self.relation
 
 
 class GovtProof(models.Model):
