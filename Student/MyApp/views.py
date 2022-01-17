@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.views import View
 from django.core.paginator import Paginator
 
-from MyApp.models import Student, Batch, Family
+from MyApp.models import Student, Batch, Family, GovtProof, Education
 from MyApp.forms import StudentForm, FamilyForm
 
 # Create your views here.
@@ -50,7 +50,6 @@ class AddStudentView(View):
 		return render(request, 'add_student.html', {'batches': batches})
 
 	def post(self, request):
-		import pdb;pdb.set_trace()
 		# Adding batch obje to request.POST
 		data = request.POST.copy()
 		data['batch'] = Batch.objects.get(number=int(data['batch']))
@@ -90,23 +89,13 @@ class ViewStudentView(View):
 		return render(request, 'show_student.html', {'student': student})
 
 
-class ViewFamily(View):
-	def get(self, request, id):
-		family = Family.objects.filter(student__id=id)
-		return render(
-			request,
-			'view_family.html',
-			{'family': family}
-			)
-
-	def post(self, request, id):
-		family = Family.objects.filter(student__id=id)
-		return render(
-			request,
-			'view_family.html',
-			{'family': family}
-			)
-
+def view_family(request, id):
+	family = Family.objects.filter(student__id=id)
+	return render(
+		request,
+		'view_family.html',
+		{'family': family}
+		)
 
 class EditFamily(View):
 	def get(self, request, id):
@@ -122,8 +111,64 @@ class EditFamily(View):
 			return HttpResponseRedirect("/students/")
 
 		obj.name = data.get('name')
-		obj.relation = data.get('relation')
 		obj.occupation = data.get('occupation')
 		obj.save()
 
 		return HttpResponseRedirect(f'/viewFamily/{student_id}')
+
+
+def view_govtId(request, id):
+	govt_ids = GovtProof.objects.filter(student__id=id)
+	return render(request, 'view_govtId.html', {'govt_ids': govt_ids})
+
+
+class EditGovtIdView(View):
+	def get(self, request, id):
+		govt_id = GovtProof.objects.get(id=id)		
+		return render(request, 'edit_govtId.html', {'govt_id': govt_id})
+
+	def post(self, request, id):
+		data = request.POST
+		student_id = data.get('student_id')
+		try:
+			obj = GovtProof.objects.get(id=data.get('id'))
+		except:
+			return HttpResponseRedirect("/students/")
+
+		obj.number = data.get('number')
+		obj.is_valid = data.get('is_valid').capitalize()
+		obj.save()
+
+		return HttpResponseRedirect(f'/viewGovtId/{student_id}')
+
+
+def view_education(request, id):
+	education = Education.objects.filter(student__id=id)
+	return render(
+		request,
+		'view_education.html',
+		{'education': education}
+		)
+
+
+class EditEducationView(View):
+	def get(self, request, id):
+		education = Education.objects.get(id=id)		
+		return render(request, 'edit_education.html', {'education': education})
+
+	def post(self, request, id):
+		data = request.POST
+		student_id = data.get('student_id')
+		try:
+			obj = Education.objects.get(id=data.get('id'))
+		except:
+			return HttpResponseRedirect("/students/")
+
+		obj.college_name = data.get('college_name')
+		obj.location = data.get('location')
+		obj.university_name = data.get('university_name')
+		obj.year_of_passed = data.get('year_of_passed')
+		obj.percentage = data.get('percentage')
+		obj.save()
+
+		return HttpResponseRedirect(f'/viewEducation/{student_id}')

@@ -35,6 +35,8 @@ class Education(models.Model):
 			("M.Sc", "M.Sc"),
 			("M.A", "M.A"),
 			("MBA", "MBA"),
+			("Intermediate", "Intermediate"),
+			("SSC", "SSC"),
 		)
 	YEAR_CHOICES = [(i, i) for i in range(2000, 2051)]
 

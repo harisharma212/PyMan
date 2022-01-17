@@ -23,14 +23,25 @@ urlpatterns = [
     path('home/', views.home),
     path('about/', views.about),
     path('service/', views.service),
+    path('contact/', views.contact),
+
     path('students/', views.students),
     path('add_student/', views.AddStudentView.as_view()),
-    path('contact/', views.contact),
     path('search_student/', views.SearchStudentView.as_view()),
     path('view_student/<id>', views.ViewStudentView.as_view()),
-    path('viewFamily/<id>', views.ViewFamily.as_view()),
-    path('viewGovtId/<id>', views.home), # TODO
-    path('viewEducation/<id>', views.home), # TODO
-    path('viewConsultancy/<id>', views.home), # TODO
+    
+    path('viewFamily/<id>', views.view_family),
     path('editFamily/<id>', views.EditFamily.as_view()),
+    path('addFamily/<id>', views.home), # TODO
+
+    path('viewGovtId/<id>', views.view_govtId),
+    path('editGovtId/<id>', views.EditGovtIdView.as_view()),
+    path('addGovtId/<id>', views.home), # TODO
+
+    path('viewEducation/<id>', views.view_education),
+    path('editEducation/<id>', views.EditEducationView.as_view()),
+    path('addEducation/<id>', views.home), # TODO
+
+    path('viewConsultancy/<id>', views.home), # TODO
+    
 ]

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+  <head>
+    <!-- ======= Head ======= -->
+    {% include 'head.html' %}
+  </head>
+  <body>
+    <!-- ======= Header ======= -->
+    {% include 'header.html' %}
+    <section id="portfolio">
+    <div class="container" data-aos="fade-up">
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="section-title">Edit Education Details</h3>
+          <h6 style="color: red;"><marquee>You can not edit Qualification</marquee></h6>
+          <div class="section-title-divider"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 d-flex justify-content-center">
+          <div class="container">
+            <form action="/editEducation/{{education.id}}" method="POST">
+              {% csrf_token %}
+              <table>
+                <tr hidden>
+                  <td>Student Name</td>
+                  <td><input type="text" name="student_id" value="{{education.student.id}}"></td>
+                </tr>
+                <tr hidden>
+                  <th>Education ID</th>
+                  <td><input type="text" name="id" value="{{education.id}}"></td>
+                </tr>
+                <tr>
+                  <th>Qualification</th>
+                  <td><input type="text" name="edu_name" value="{{education.edu_name}}" disabled></td>
+                </tr>
+                <tr>
+                  <th>College Name</th>
+                  <td><input type="text" name="college_name" value="{{education.college_name}}"></td>
+                </tr>
+                <tr>
+                  <th>Location</th>
+                  <td><input type="text" name="location" value="{{education.location}}"></td>
+                </tr>
+                <tr>
+                  <th>University Name</th>
+                  <td><input type="text" name="university_name" value="{{education.university_name}}"></td>
+                </tr>
+                <tr>
+                  <th>Pass Out Year</th>
+                  <td><input type="text" name="year_of_passed" value="{{education.year_of_passed}}"></td>
+                </tr>
+                <tr>
+                  <th>Percentage</th>
+                  <td><input type="text" name="percentage" value="{{education.percentage}}"></td>
+                </tr>
+                <tr>
+                  <td colspan="2"><input type="submit" value="Save"></td>
+                </tr>
+            </table>
+          </form>
+            
+        </div>
+        </div>
+      </div>
+    </div>
+
+  </section><!-- End Portfolio Section -->
+    <!-- ======= Footer ======= -->
+    {% include 'footer.html' %}
+
+    <!-- Vendor JS Files -->
+    {% include 'js_files.html' %}
+  </body>
+</html>
+

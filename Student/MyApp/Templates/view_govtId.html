@@ -12,7 +12,7 @@
     <div class="container" data-aos="fade-up">
       <div class="row">
         <div class="col-md-12">
-          <h3 class="section-title">Family Details</h3>
+          <h3 class="section-title">Govt ID Details</h3>
           <div class="section-title-divider"></div>
         </div>
       </div>`
@@ -23,21 +23,21 @@
             <form>
               <table>
               <tr>
-                <th>Name</th>
-                <th>Relation</th>
-                <th>Occupation</th>
+                <th>ID Type</th>
+                <th>Number</th>
+                <th>Is Valid?</th>
                 <th>Action</th>
               </tr>
-              {% for i in family %}
+              {% for i in govt_ids %}
               <tr>
-                <td>{{i.name}}</td>
-                <td>{{i.relation}}</td>
-                <td>{{i.occupation}}</td>
-                <td><button><a href="/editFamily/{{i.id}}">Edit</a></button></td>
+                <td>{{i.id_type}}</td>
+                <td>{{i.number}}</td>
+                <td>{{i.is_valid}}</td>
+                <td><button><a href="/editGovtId/{{i.id}}">Edit</a></button></td>
               </tr>
             {% endfor %}
           </table>
-         <h5 align="center"><a href="/addFamily/{{family.0.student.id}}">Add Family Member</a></h5>
+         <h5 align="center"><a href="/addGovtId/{{govt_ids.0.student.id}}">Add Govt ID</a></h5>
             </form>           
             
         </div>
