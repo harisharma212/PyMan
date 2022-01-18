@@ -3,8 +3,12 @@ from django.http import HttpResponseRedirect
 from django.views import View
 from django.core.paginator import Paginator
 
-from MyApp.models import Student, Batch, Family, GovtProof, Education
-from MyApp.forms import StudentForm, FamilyForm
+from MyApp.models import (
+	Student, Batch, Family, GovtProof, Education, CourseFee, Consultancy
+	)
+from MyApp.forms import (
+	StudentForm, FamilyForm
+	)
 
 # Create your views here.
 def home(request):
@@ -24,7 +28,6 @@ def contact(request):
 	return render(request, 'contact.html')
 
 def students(request):
-	# TODO: Need to add search student.
 	students = Student.objects.all()
 	p = Paginator(students, 5)
 	page_number = request.GET.get('page')
@@ -107,12 +110,11 @@ class EditFamily(View):
 		student_id = data.get('student_id')
 		try:
 			obj = Family.objects.get(id=data.get('id'))
+			obj.name = data.get('name')
+			obj.occupation = data.get('occupation')
+			obj.save()
 		except:
 			return HttpResponseRedirect("/students/")
-
-		obj.name = data.get('name')
-		obj.occupation = data.get('occupation')
-		obj.save()
 
 		return HttpResponseRedirect(f'/viewFamily/{student_id}')
 
@@ -132,12 +134,11 @@ class EditGovtIdView(View):
 		student_id = data.get('student_id')
 		try:
 			obj = GovtProof.objects.get(id=data.get('id'))
+			obj.number = data.get('number')
+			obj.is_valid = data.get('is_valid').capitalize()
+			obj.save()
 		except:
 			return HttpResponseRedirect("/students/")
-
-		obj.number = data.get('number')
-		obj.is_valid = data.get('is_valid').capitalize()
-		obj.save()
 
 		return HttpResponseRedirect(f'/viewGovtId/{student_id}')
 
@@ -161,14 +162,73 @@ class EditEducationView(View):
 		student_id = data.get('student_id')
 		try:
 			obj = Education.objects.get(id=data.get('id'))
+			obj.college_name = data.get('college_name')
+			obj.location = data.get('location')
+			obj.university_name = data.get('university_name')
+			obj.year_of_passed = data.get('year_of_passed')
+			obj.percentage = data.get('percentage')
+			obj.save()
 		except:
 			return HttpResponseRedirect("/students/")
 
-		obj.college_name = data.get('college_name')
-		obj.location = data.get('location')
-		obj.university_name = data.get('university_name')
-		obj.year_of_passed = data.get('year_of_passed')
-		obj.percentage = data.get('percentage')
-		obj.save()
-
 		return HttpResponseRedirect(f'/viewEducation/{student_id}')
+
+
+def view_course_fee(request, id):
+	fee = CourseFee.objects.filter(student__id=id)
+	return render(
+		request,
+		'view_course_fee.html',
+		{'fee': fee}
+		)
+
+
+class EditCourseFeeDetailsView(View):
+	def get(self, request, id):
+		fee = CourseFee.objects.get(id=id)
+		fee.paid_on = str(fee.paid_on)	
+		return render(request, 'edit_course_fee.html', {'fee': fee})
+
+	def post(self, request, id):
+		data = request.POST
+		student_id = data.get('student_id')
+		try:
+			obj = CourseFee.objects.get(id=data.get('id'))
+			obj.paid_on = data.get('date')
+			obj.amount = data.get('amount')
+			obj.save()
+		except:
+			return HttpResponseRedirect("/students/")
+
+		return HttpResponseRedirect(f'/viewCourseFeeDetails/{student_id}')
+
+
+def view_consultancy(request, id):
+	consultancy = Consultancy.objects.filter(student__id=id).order_by('from_date')
+	return render(
+		request,
+		'view_consultancy.html',
+		{'consultancy': consultancy}
+		)
+
+
+class EditConsultancyView(View):
+	def get(self, request, id):
+		consultancy = Consultancy.objects.get(id=id)
+		consultancy.from_date = str(consultancy.from_date)
+		return render(request, 'edit_consultancy.html', {'consultancy': consultancy})
+
+	def post(self, request, id):
+		data = request.POST
+		student_id = data.get('student_id')
+		try:
+			obj = Consultancy.objects.get(id=data.get('id'))
+			obj.name = data.get('name')
+			obj.address = data.get('address')
+			obj.from_date = data.get('from_date')
+			obj.to_date = data.get('to_date')
+			obj.save()
+		except:
+			return HttpResponseRedirect("/students/")
+
+		return HttpResponseRedirect(f'/viewConsultancy/{student_id}')

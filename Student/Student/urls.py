@@ -42,6 +42,12 @@ urlpatterns = [
     path('editEducation/<id>', views.EditEducationView.as_view()),
     path('addEducation/<id>', views.home), # TODO
 
-    path('viewConsultancy/<id>', views.home), # TODO
+    path('viewCourseFeeDetails/<id>', views.view_course_fee),
+    path('editCourseFeeDetails/<id>', views.EditCourseFeeDetailsView.as_view()),
+    path('addCourseFeeDetails/<id>', views.home), # TODO
+
+    path('viewConsultancy/<id>', views.view_consultancy),
+    path('editConsultancy/<id>', views.EditConsultancyView.as_view()),
+    path('addConsultancy/<id>', views.home), # TODO
     
 ]

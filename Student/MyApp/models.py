@@ -49,7 +49,7 @@ class Education(models.Model):
 	percentage = models.DecimalField(decimal_places=2, max_digits=5)
 
 	def __str__(self):
-		return self.student.name
+		return f"{self.student.name}'s-{self.edu_name}" 
 
 
 class Family(models.Model):
@@ -69,7 +69,7 @@ class Family(models.Model):
 	occupation = models.CharField(max_length=100)
 
 	def __str__(self):
-		return self.relation
+		return f"{self.student.name}'s-{self.relation}" 
 
 
 class GovtProof(models.Model):
@@ -85,7 +85,7 @@ class GovtProof(models.Model):
 	is_valid = models.BooleanField(default=True)
 
 	def __str__(self):
-		return self.student.name
+		return f"{self.student.name}'s-{self.id_type}" 
 
 
 class Consultancy(models.Model):
@@ -96,7 +96,7 @@ class Consultancy(models.Model):
 	to_date = models.CharField(default="Till Date", max_length=100)
 
 	def __str__(self):
-		return self.student.name
+		return self.name
 
 
 class CourseFee(models.Model):
@@ -105,5 +105,5 @@ class CourseFee(models.Model):
 	amount = models.DecimalField(max_digits=10, decimal_places=2)
 
 	def __str__(self):
-		return self.student.name
+		return f"{self.student.name}'s-{str(self.paid_on)}" 
 
