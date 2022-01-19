@@ -15,31 +15,31 @@ class StudentForm(forms.ModelForm):
 		fields = '__all__'
 
 
-class EducationForm(forms.Form):
+class EducationForm(forms.ModelForm):
 	class Meta:
 		model = Education
 		fields = '__all__'
 
 
-class FamilyForm(forms.Form):
+class FamilyForm(forms.ModelForm):
 	class Meta:
 		model = Family
 		fields = '__all__'
 
 
-class GovtProofForm(forms.Form):
+class GovtProofForm(forms.ModelForm):
 	class Meta:
 		model = GovtProof
 		fields = '__all__'
 
 
-class ConsultancyForm(forms.Form):
+class ConsultancyForm(forms.ModelForm):
 	class Meta:
 		model = Consultancy
 		fields = '__all__'
 
 
-class CourseFeeForm(forms.Form):
+class CourseFeeForm(forms.ModelForm):
 	class Meta:
 		model = CourseFee
 		fields = '__all__'

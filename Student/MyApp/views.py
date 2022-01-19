@@ -7,7 +7,7 @@ from MyApp.models import (
 	Student, Batch, Family, GovtProof, Education, CourseFee, Consultancy
 	)
 from MyApp.forms import (
-	StudentForm, FamilyForm
+	StudentForm, FamilyForm, GovtProofForm
 	)
 
 # Create your views here.
@@ -33,7 +33,7 @@ def students(request):
 	page_number = request.GET.get('page')
 	
 	try:
-		page_obj = p.get_page(page_number)  # returns the desired page object
+		page_obj = p.get_page(page_number)
 	except PageNotAnInteger:
 		# if page_number is not an integer then assign the first page
 		page_obj = p.page(1)
@@ -93,11 +93,13 @@ class ViewStudentView(View):
 
 
 def view_family(request, id):
+	student = Student.objects.get(id=id)
 	family = Family.objects.filter(student__id=id)
 	return render(
 		request,
 		'view_family.html',
-		{'family': family}
+		{'family': family,
+		'student': student}
 		)
 
 class EditFamily(View):
@@ -119,9 +121,35 @@ class EditFamily(View):
 		return HttpResponseRedirect(f'/viewFamily/{student_id}')
 
 
+class AddFamilyView(View):
+	def get(self, request, id):
+		try:
+			student = Student.objects.get(id=id)
+			form = FamilyForm()
+			if id:
+				form.fields['student'].queryset = \
+				 form.fields['student'].queryset.filter(id=id)
+		except:
+			return HttpResponseRedirect('/students/')
+
+		return render(request, 'add_family.html', {'form': form, 'student': student})
+
+	def post(self, request, id):
+		# Adding batch obje to request.POST
+		form = FamilyForm(request.POST)
+		if form.is_valid():
+			form.save()
+		return HttpResponseRedirect(f'/viewFamily/{id}')
+
+
 def view_govtId(request, id):
+	student = Student.objects.get(id=id)
 	govt_ids = GovtProof.objects.filter(student__id=id)
-	return render(request, 'view_govtId.html', {'govt_ids': govt_ids})
+	return render(request, 'view_govtId.html', 
+		{'govt_ids': govt_ids,
+		'student': student
+		}
+	)
 
 
 class EditGovtIdView(View):
@@ -143,12 +171,33 @@ class EditGovtIdView(View):
 		return HttpResponseRedirect(f'/viewGovtId/{student_id}')
 
 
+class AddGovtIdView(View):
+	def get(self, request, id):
+		try:
+			student = Student.objects.get(id=id)
+			form = GovtProofForm()
+			if id:
+				form.fields['student'].queryset = \
+				 form.fields['student'].queryset.filter(id=id)
+		except:
+			return HttpResponseRedirect('/students/')
+
+		return render(request, 'add_govtId.html', {'form': form, 'student': student})
+
+	def post(self, request, id):
+		form = GovtProofForm(request.POST)
+		if form.is_valid():
+			form.save()
+		return HttpResponseRedirect(f'/viewGovtId/{id}')
+
+
 def view_education(request, id):
+	student = Student.objects.get(id=id)
 	education = Education.objects.filter(student__id=id)
 	return render(
 		request,
 		'view_education.html',
-		{'education': education}
+		{'education': education, 'student': student}
 		)
 
 
@@ -175,11 +224,12 @@ class EditEducationView(View):
 
 
 def view_course_fee(request, id):
+	student = Student.objects.get(id=id)
 	fee = CourseFee.objects.filter(student__id=id)
 	return render(
 		request,
 		'view_course_fee.html',
-		{'fee': fee}
+		{'fee': fee, 'student': student}
 		)
 
 
@@ -204,11 +254,12 @@ class EditCourseFeeDetailsView(View):
 
 
 def view_consultancy(request, id):
+	student = Student.objects.get(id=id)
 	consultancy = Consultancy.objects.filter(student__id=id).order_by('from_date')
 	return render(
 		request,
 		'view_consultancy.html',
-		{'consultancy': consultancy}
+		{'consultancy': consultancy, 'student': student}
 		)
 
 

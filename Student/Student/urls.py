@@ -32,11 +32,11 @@ urlpatterns = [
     
     path('viewFamily/<id>', views.view_family),
     path('editFamily/<id>', views.EditFamily.as_view()),
-    path('addFamily/<id>', views.home), # TODO
+    path('addFamily/<id>', views.AddFamilyView.as_view()), # TODO
 
     path('viewGovtId/<id>', views.view_govtId),
     path('editGovtId/<id>', views.EditGovtIdView.as_view()),
-    path('addGovtId/<id>', views.home), # TODO
+    path('addGovtId/<id>', views.AddGovtIdView.as_view()), # TODO
 
     path('viewEducation/<id>', views.view_education),
     path('editEducation/<id>', views.EditEducationView.as_view()),
