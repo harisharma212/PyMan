@@ -42,8 +42,8 @@
                 <td>{{i.dob}}</td>
                 <td>{{i.mail_id}}</td>
                 <td>{{i.mobile}}</td>
-                <td><a href="/edit_student/"><img src="{% static 'assets/img/edit.jpg' %}" ></a></td>
-                <td><a href="/delete_student/"><img src="{% static 'assets/img/delete.png' %}" ></a></td>
+                <td><a href="/edit_student/{{i.id}}"><img src="{% static 'assets/img/edit.jpg' %}" ></a></td>
+                <td><a href="/delete_student/{{i.id}}"><img src="{% static 'assets/img/delete.png' %}" ></a></td>
               </tr>
             {% endfor %}
           </table>

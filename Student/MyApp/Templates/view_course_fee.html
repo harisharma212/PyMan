@@ -26,12 +26,14 @@
                 <th>Date</th>
                 <th>Amount</th>
                 <th>Action</th>
+                <th>Action</th>
               </tr>
               {% for i in fee %}
               <tr>
                 <td>{{i.paid_on}}</td>
                 <td>{{i.amount}}</td>
                 <td><button><a href="/editCourseFeeDetails/{{i.id}}">Edit</a></button></td>
+                <td><button><a href="/deleteCourseFeeDetails/{{i.id}}">Delete</a></button></td>
               </tr>
             {% endfor %}
           </table>

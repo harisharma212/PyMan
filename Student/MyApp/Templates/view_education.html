@@ -30,6 +30,7 @@
                 <th>Pass Out Year</th>
                 <th>Percentage</th>
                 <th>Action</th>
+                <th>Action</th>
               </tr>
               {% for i in education %}
               <tr>
@@ -40,6 +41,7 @@
                 <td>{{i.year_of_passed}}</td>
                 <td>{{i.percentage}}</td>
                 <td><button><a href="/editEducation/{{i.id}}">Edit</a></button></td>
+                <td><button><a href="/deleteEducation/{{i.id}}">Delete</a></button></td>
               </tr>
             {% endfor %}
           </table>

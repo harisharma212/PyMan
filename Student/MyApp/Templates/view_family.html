@@ -27,6 +27,7 @@
                 <th>Relation</th>
                 <th>Occupation</th>
                 <th>Action</th>
+                <th>Action</th>
               </tr>
               {% for i in family %}
               <tr>
@@ -34,6 +35,7 @@
                 <td>{{i.relation}}</td>
                 <td>{{i.occupation}}</td>
                 <td><button><a href="/editFamily/{{i.id}}">Edit</a></button></td>
+                <td><button><a href="/deleteFamily/{{i.id}}">Delete</a></button></td>
               </tr>
             {% endfor %}
           </table>

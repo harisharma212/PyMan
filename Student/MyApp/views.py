@@ -7,7 +7,8 @@ from MyApp.models import (
 	Student, Batch, Family, GovtProof, Education, CourseFee, Consultancy
 	)
 from MyApp.forms import (
-	StudentForm, FamilyForm, GovtProofForm
+	StudentForm, FamilyForm, GovtProofForm, EducationForm,
+	CourseFeeForm, ConsultancyForm, BatchForm
 	)
 
 # Create your views here.
@@ -26,6 +27,19 @@ def service(request):
 
 def contact(request):
 	return render(request, 'contact.html')
+
+
+class AddBatchView(View):
+	def get(self, request):
+		batch = BatchForm()
+		return render(request, 'add_batch.html', {'batch': batch})
+
+	def post(self, request):
+		form = BatchForm(request.POST)
+		if form.is_valid():
+			form.save()
+		return HttpResponseRedirect('/home/')
+
 
 def students(request):
 	students = Student.objects.all()
@@ -89,7 +103,38 @@ class ViewStudentView(View):
 			student = Student.objects.get(id=id)
 		except:
 			return HttpResponseRedirect('/students/')
-		return render(request, 'show_student.html', {'student': student})
+		return render(request, 'view_student.html', {'student': student})
+
+
+class EditStudentView(View):
+	def get(self, request, id):
+		student = Student.objects.get(id=id)
+		student.dob = str(student.dob)
+		return render(request, 'edit_student.html', {'student': student})
+
+	def post(self, request, id):
+		data = request.POST
+		try:
+			obj = Student.objects.get(id=id)
+			obj.name = data.get('name')
+			obj.dob = data.get('dob')
+			obj.maild_id = data.get('mail_id')
+			obj.mobile = data.get('mobile')
+			obj.save()
+		except:
+			return HttpResponseRedirect("/students/")
+
+		return HttpResponseRedirect(f'/students/')
+
+
+def delete_student(request, id):
+	import pdb;pdb.set_trace()
+	try:
+		student = Student.objects.get(id=id)
+		student.delete()
+		return HttpResponseRedirect('/students/')
+	except:
+		return HttpResponseRedirect('/home/')
 
 
 def view_family(request, id):
@@ -142,6 +187,15 @@ class AddFamilyView(View):
 		return HttpResponseRedirect(f'/viewFamily/{id}')
 
 
+def delete_family(request, id):
+	try:
+		family = Family.objects.get(id=id)
+		family.delete()
+		return HttpResponseRedirect(f'/viewFamily/{family.student.id}')
+	except:
+		return HttpResponseRedirect('/home/')
+
+
 def view_govtId(request, id):
 	student = Student.objects.get(id=id)
 	govt_ids = GovtProof.objects.filter(student__id=id)
@@ -169,6 +223,15 @@ class EditGovtIdView(View):
 			return HttpResponseRedirect("/students/")
 
 		return HttpResponseRedirect(f'/viewGovtId/{student_id}')
+
+
+def delete_govtId(request, id):
+	try:
+		govt = GovtProof.objects.get(id=id)
+		govt.delete()
+		return HttpResponseRedirect(f'/viewGovtId/{govt.student.id}')
+	except:
+		return HttpResponseRedirect('/home/')
 
 
 class AddGovtIdView(View):
@@ -223,6 +286,35 @@ class EditEducationView(View):
 		return HttpResponseRedirect(f'/viewEducation/{student_id}')
 
 
+class AddEducationView(View):
+	def get(self, request, id):
+		try:
+			student = Student.objects.get(id=id)
+			form = EducationForm()
+			if id:
+				form.fields['student'].queryset = \
+				 form.fields['student'].queryset.filter(id=id)
+		except:
+			return HttpResponseRedirect('/students/')
+
+		return render(request, 'add_education.html', {'form': form, 'student': student})
+
+	def post(self, request, id):
+		form = EducationForm(request.POST)
+		if form.is_valid():
+			form.save()
+		return HttpResponseRedirect(f'/viewEducation/{id}')
+
+
+def delete_education(request, id):
+	try:
+		edu = Education.objects.get(id=id)
+		edu.delete()
+		return HttpResponseRedirect(f'/viewEducation/{edu.student.id}')
+	except:
+		return HttpResponseRedirect('/home/')
+
+
 def view_course_fee(request, id):
 	student = Student.objects.get(id=id)
 	fee = CourseFee.objects.filter(student__id=id)
@@ -251,6 +343,35 @@ class EditCourseFeeDetailsView(View):
 			return HttpResponseRedirect("/students/")
 
 		return HttpResponseRedirect(f'/viewCourseFeeDetails/{student_id}')
+
+
+class AddCourseFeeView(View):
+	def get(self, request, id):
+		try:
+			student = Student.objects.get(id=id)
+			form = CourseFeeForm()
+			if id:
+				form.fields['student'].queryset = \
+				 form.fields['student'].queryset.filter(id=id)
+		except:
+			return HttpResponseRedirect('/students/')
+
+		return render(request, 'add_course_fee.html', {'form': form, 'student': student})
+
+	def post(self, request, id):
+		form = CourseFeeForm(request.POST)
+		if form.is_valid():
+			form.save()
+		return HttpResponseRedirect(f'/viewCourseFeeDetails/{id}')
+
+
+def delete_course_fee(request, id):
+	try:
+		cf = CourseFee.objects.get(id=id)
+		cf.delete()
+		return HttpResponseRedirect(f'/viewCourseFeeDetails/{cf.student.id}')
+	except:
+		return HttpResponseRedirect('/home/')
 
 
 def view_consultancy(request, id):
@@ -283,3 +404,32 @@ class EditConsultancyView(View):
 			return HttpResponseRedirect("/students/")
 
 		return HttpResponseRedirect(f'/viewConsultancy/{student_id}')
+
+
+class AddConsultancyView(View):
+	def get(self, request, id):
+		try:
+			student = Student.objects.get(id=id)
+			form = ConsultancyForm()
+			if id:
+				form.fields['student'].queryset = \
+				 form.fields['student'].queryset.filter(id=id)
+		except:
+			return HttpResponseRedirect('/students/')
+
+		return render(request, 'add_consultancy.html', {'form': form, 'student': student})
+
+	def post(self, request, id):
+		form = ConsultancyForm(request.POST)
+		if form.is_valid():
+			form.save()
+		return HttpResponseRedirect(f'/viewConsultancy/{id}')
+
+
+def delete_consultancy(request, id):
+	try:
+		con = Consultancy.objects.get(id=id)
+		con.delete()
+		return HttpResponseRedirect(f'/viewConsultancy/{con.student.id}')
+	except:
+		return HttpResponseRedirect('/home/')

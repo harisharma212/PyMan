@@ -27,6 +27,7 @@
                 <th>Number</th>
                 <th>Is Valid?</th>
                 <th>Action</th>
+                <th>Action</th>
               </tr>
               {% for i in govt_ids %}
               <tr>
@@ -34,6 +35,7 @@
                 <td>{{i.number}}</td>
                 <td>{{i.is_valid}}</td>
                 <td><button><a href="/editGovtId/{{i.id}}">Edit</a></button></td>
+                <td><button><a href="/deleteGovtId/{{i.id}}">Delete</a></button></td>
               </tr>
             {% endfor %}
           </table>

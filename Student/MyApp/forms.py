@@ -1,6 +1,7 @@
 from django import forms
 
 from MyApp.models import (
+	Batch,
 	Student,
 	Education,
 	Family,
@@ -8,6 +9,12 @@ from MyApp.models import (
 	Consultancy,
 	CourseFee
 	)
+
+
+class BatchForm(forms.ModelForm):
+	class Meta:
+		model = Batch
+		fields = '__all__'
 
 class StudentForm(forms.ModelForm):
 	class Meta:
