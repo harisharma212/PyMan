@@ -1,1 +1,20 @@
-Test Readme File
+#### Welcome to the App ###
+
+# Prerequisites:
+----------------
+1. Python 3.X
+2. Django(Latest Version is Fine)
+3. Github
+4. Pip
+
+
+# Follow the below steps to setup the application in local system.
+-----------------------------------------------------------------
+1. Clone the repository into your local machine.
+2. Create a virtualenv or activate the existing virtualenv.
+3. Install the list of required packages using below command.
+    pip install -r requirements.txt
+4. Locate and redirect to the manage.py file.
+5. Run the server using below command
+    python manage.py runserver
+   
