@@ -30,11 +30,13 @@ def contact(request):
 
 
 class AddBatchView(View):
+
 	def get(self, request):
 		batch = BatchForm()
 		return render(request, 'add_batch.html', {'batch': batch})
 
 	def post(self, request):
+		import pdb;pdb.set_trace()
 		form = BatchForm(request.POST)
 		if form.is_valid():
 			form.save()
@@ -128,7 +130,6 @@ class EditStudentView(View):
 
 
 def delete_student(request, id):
-	import pdb;pdb.set_trace()
 	try:
 		student = Student.objects.get(id=id)
 		student.delete()

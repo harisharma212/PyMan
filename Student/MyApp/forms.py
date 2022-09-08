@@ -11,10 +11,17 @@ from MyApp.models import (
 	)
 
 
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
+
 class BatchForm(forms.ModelForm):
 	class Meta:
 		model = Batch
 		fields = '__all__'
+		widgets = {
+            'start_date': DateInput()
+        }
 
 class StudentForm(forms.ModelForm):
 	class Meta:
