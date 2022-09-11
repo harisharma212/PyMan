@@ -29,6 +29,27 @@ def contact(request):
 	return render(request, 'contact.html')
 
 
+def batches(request):
+	batches = Batch.objects.all()
+	p = Paginator(batches, 5)
+	page_number = request.GET.get('page')
+	
+	try:
+		page_obj = p.get_page(page_number)
+	except PageNotAnInteger:
+		# if page_number is not an integer then assign the first page
+		page_obj = p.page(1)
+	except EmptyPage:
+		# if page is empty then return last pagec
+		page_obj = p.page(p.num_pages)
+	
+	return render(request, 'batches.html', {
+		'page_obj': page_obj,
+		'batch_names': [i.batch_name for i in batches]
+		}
+		)
+
+
 class AddBatchView(View):
 
 	def get(self, request):
@@ -41,6 +62,28 @@ class AddBatchView(View):
 		if form.is_valid():
 			form.save()
 		return HttpResponseRedirect('/home/')
+
+
+class SearchbacthView(View):
+	def get(self, request, id):
+		batch_students = Student.objects.filter(batch__id=id)
+		
+		p = Paginator(batch_students, 5)
+		page_number = request.GET.get('page')
+		
+		try:
+			page_obj = p.get_page(page_number)  # returns the desired page object
+		except PageNotAnInteger:
+			# if page_number is not an integer then assign the first page
+			page_obj = p.page(1)
+		except EmptyPage:
+			# if page is empty then return last pagec
+			page_obj = p.page(p.num_pages)
+		
+		return render(request, 'students.html', {
+			'page_obj': page_obj,
+			'stu_names': [i.name for i in batch_students]}
+			)
 
 
 def students(request):

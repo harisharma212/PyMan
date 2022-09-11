@@ -25,7 +25,9 @@ urlpatterns = [
     path('service/', views.service),
     path('contact/', views.contact),
 
+    path('batches/', views.batches),
     path('add_batch/', views.AddBatchView.as_view()),
+    path('view_bacth/<id>/', views.SearchbacthView.as_view()),
 
     path('students/', views.students),
     path('add_student/', views.AddStudentView.as_view()),
